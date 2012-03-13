@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>Untitled Page</title>
+	<!--<script src="../enyo/1.0/framework/enyo.js" type="text/javascript"></script>-->
+	<link href="lib/jquery/ui-lightness/jquery-ui-1.8.16.custom.css" rel="stylesheet" type="text/css" />
+    <script src="../lib/jquery/jquery-1.7.js" type="text/javascript"></script>
+    <script src="../lib/jquery/jquery-ui-1.8.16.custom.min.js" type="text/javascript"></script>
+    <script src="../../fdlengine.js" type="text/javascript"></script>
+    <script src="../../fdlui.js" type="text/javascript"></script>
+    <script src="miserables.js" type="text/javascript"></script>
+    <style type="text/css">       
+        #layout {
+            width: 800px;
+            height: 500px;
+            margin: 10px auto;
+            border: solid 1px;
+            overflow: hidden;
+        }
+        .node {
+            width: 10px;
+            height: 10px;
+            background-color: Black;
+            border-radius: 20px;
+        }
+        
+        .fdl-node.fdl-node-selected {
+            background-color: Gray;
+        }
+    </style>
+</head>
+<body>
+    <div id="layout"></div>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            var $layout = $("#layout").layout({repulsion: 2, attraction: 0.000002, inertia: 0.2, friction: 0.003, dt: 40, allowDragging: true, scale: 0.3});
+            var $node;
+            for (var i=0; i<miserables.nodes.length; i++) {
+                var $node = $("<div></div>").addClass("node").node();
+                $layout.layout("addNode", $node);
+            }
+            for (var i=0; i<miserables.links.length; i++) {
+                $layout.layout("addLink", {from: miserables.links[i].source, to: miserables.links[i].target, weight: 1, type: "retweet"});
+            }
+            $layout.layout("run");
+        });
+    </script>
+</body>
+</html>
